@@ -1,0 +1,29 @@
+# this is not actually prod ready
+version: "3.8"
+
+services:
+  app:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    networks:
+      - backend
+  postgres:
+    env_file: .env
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+
+networks:
+  backend:
